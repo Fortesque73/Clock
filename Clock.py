@@ -5,6 +5,7 @@ class Clock:
     #Init clock with a previous set alarm
     def __init__(self, datetime):
         self.alarm = datetime
+        self.alarm = self.alarm.strftime("%d-%m-%Y %H:%M:%S")
 
     #returns current time in string
     def getCurrentTime(self):
@@ -12,17 +13,23 @@ class Clock:
 
     #prints current time in string format every second
     def show(self):
-        while True :
-            print (self.getCurrentTime(), end="\r")
-            time.sleep(1)
+        print (self.getCurrentTime(), type(self.getCurrentTime), end="\r")
+        time.sleep(1)
 
-    def alarm(self):
-        self.alarm = self.alarm.strftime("%d-%m-%Y %H:%M:%S")
+    #If current time and alarm time are equal return true
+    def alarmSound(self):
+        if self.getCurrentTime == self.alarm :
+            return True
 
     def showAlarm(self):
         print (self.alarm)
 
 
-alarm = datetime(2019, 1, 26, 18, 5, 00, 00)
-x = Clock(alarm)
-x.showAlarm()
+alarm = datetime(2019, 1, 26, 18, 28, 15, 00)
+clock = Clock(alarm)
+exit = False
+while exit is False:
+    clock.show()
+    if clock.alarmSound() is True:
+        exit = True
+print("Pasa algo")
