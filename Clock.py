@@ -4,7 +4,7 @@ import time
 class Clock:
 
     def getCurrentTime(self):
-        return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        return datetime.now().strftime("%d-%m-%Y %H:%M:%S")
 
     def show(self):
         while True :
