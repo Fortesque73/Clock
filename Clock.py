@@ -1,37 +1,43 @@
 from datetime import datetime
 import time
 
+
+
 class Clock:
-    #Init clock with a previous set alarm
-    def __init__(self, alarmTime):
+    #alarmTime=datetime, currentTime=datetime
+    def __init__(self, alarmTime, currentTime):
         self.currentTime =  datetime.now()
         self.cuerrentTime = self.currentTime.strftime("%d-%m-%Y %H:%M:%S")
         self.alarm = alarmTime
-        self.alarm = self.alarm.strftime("%d-%m-%Y %H:%M:%S")
+        self.alarmNoMilis = self.alarm.strftime("%d-%m-%Y %H:%M:%S")
 
     #updates current time in string
     def updateCurrentTime(self):
         self.currentTime = datetime.now()
-        self.cuerrentTime = self.currentTime.strftime("%d-%m-%Y %H:%M:%S")
+        self.currentTimeNoMilis = self.currentTime.strftime("%d-%m-%Y %H:%M:%S")
 
     #prints current time in string format every second
     def show(self):
         self.updateCurrentTime()
-        print (self.currrentTime end="\r")
+        print (self.currentTimeNoMilis, end="\r")
+        
 
 
     #If current time and alarm time are equal return true
     def alarmSound(self):
-        if self.currentTime is self.alarm :
+        if self.currentTimeNoMilis == self.alarmNoMilis:
             return True
+        else:
+            return False
 
-alarm = datetime(2019, 1, 26, 18, 28, 15, 00)
 currentTime = datetime.now()
+alarm = datetime(2019, 1, 28, 16, 47, 32, 00)
 clock = Clock(alarm, currentTime)
 exit = False
+print ("alarm "+clock.alarmNoMilis)
 while exit is False:
     clock.show()
-    if clock.alarmSound() is True:
+    if clock.alarmSound() == True:
         exit = True
         
     time.sleep(1)
