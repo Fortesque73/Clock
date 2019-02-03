@@ -77,7 +77,6 @@ print ("alarm "+clock.alarms[0].timeNoMilis)
 while exit is False:
     clock.show()
     sound=clock.checkAlarms()#sound=int with the alarms' id that will sound
-    print(sound)
     if sound >= 0:
         exit = True
         print('sonido pa tu culo')
