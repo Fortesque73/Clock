@@ -1,15 +1,23 @@
 from datetime import datetime
 import time
+import vlc
+
 
 class Alarm:
     def __init__(self, alarmTime, ringtone):
         self.time=alarmTime
-        self.ringtone=ringtone
         self.timeNoMilis = alarmTime.strftime("%d-%m-%Y %H:%M:%S") #time in string
+        if(len(ringtone)>0):
+            self.ringtone=ringtone
+        else:
+            self.ringtone='default'
 
     def play(self):
         #here some code that makes the alarm sound
-        pass
+        track=vlc.MediaPlayer('./media/%s.mp3' % (self.ringtone))
+
+        #some thread management here
+        track.play()
 
 class Clock:
     #alarmTime=datetime, currentTime=datetime
@@ -57,6 +65,13 @@ class Clock:
             i+=1
         return -1
 
+    def showAlarms(self):
+        i=0
+        while (i<self.numalarms):
+            print('Alarm %d: %s ' % (i, self.alarms[i].timeNoMilis))
+            i+=1
+
+
 #First create a clock instance
 currentTime = datetime.now()
 clock=Clock(currentTime)
@@ -64,21 +79,27 @@ clock=Clock(currentTime)
 alarmtime = datetime(2019, 2, 3, 1, 56, 20, 00)
 alarm=Alarm(alarmtime, "")
 
+if(currentTime.second>=50):
+    alarm2=Alarm(datetime(
+        currentTime.year, currentTime.month, currentTime.day,
+        currentTime.hour, currentTime.minute+1, 0, 0 ), "")
+else:
+    alarm2=Alarm(datetime(
+        currentTime.year, currentTime.month, currentTime.day, currentTime.hour, currentTime.minute, currentTime.second+5, 0
+        ), "")
+
 #add the alarms to the clock
 clock.quickalarm(alarm)
+clock.quickalarm(alarm2)
 
-i=0
-while(i<clock.numalarms):
-    print(clock.alarms[i].timeNoMilis)
-    i+=1
+#show the added alarms
+clock.showAlarms()
 
-exit = False
-print ("alarm "+clock.alarms[0].timeNoMilis)
-while exit is False:
+while 1:
     clock.show()
     sound=clock.checkAlarms()#sound=int with the alarms' id that will sound
     if sound >= 0:
-        exit = True
+        clock.alarms[sound].play()
         print('sonido pa tu culo')
         print(sound)
     time.sleep(1)
