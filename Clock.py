@@ -72,34 +72,40 @@ class Clock:
             i+=1
 
 
-#First create a clock instance
-currentTime = datetime.now()
-clock=Clock(currentTime)
-#create some alarms
-alarmtime = datetime(2019, 2, 3, 1, 56, 20, 00)
-alarm=Alarm(alarmtime, "")
+def main():
+    #First create a clock instance
+    currentTime = datetime.now()
+    clock=Clock(currentTime)
+    #create some alarms
+    alarmtime = datetime(2019, 2, 3, 1, 56, 20, 00)
+    alarm=Alarm(alarmtime, "")
 
-if(currentTime.second>=50):
-    alarm2=Alarm(datetime(
-        currentTime.year, currentTime.month, currentTime.day,
-        currentTime.hour, currentTime.minute+1, 0, 0 ), "")
-else:
-    alarm2=Alarm(datetime(
-        currentTime.year, currentTime.month, currentTime.day, currentTime.hour, currentTime.minute, currentTime.second+5, 0
+    if(currentTime.second>=50):
+        alarm2=Alarm(datetime(
+            currentTime.year, currentTime.month, currentTime.day,
+            currentTime.hour, currentTime.minute+1, 0, 0 ), "")
+    else:
+        alarm2=Alarm(datetime(
+            currentTime.year, currentTime.month, currentTime.day, currentTime.hour, currentTime.minute, currentTime.second+5, 0
         ), "")
 
-#add the alarms to the clock
-clock.quickalarm(alarm)
-clock.quickalarm(alarm2)
+    #add the alarms to the clock
+    clock.quickalarm(alarm)
+    clock.quickalarm(alarm2)
 
-#show the added alarms
-clock.showAlarms()
+    #show the added alarms
+    clock.showAlarms()
 
-while 1:
-    clock.show()
-    sound=clock.checkAlarms()#sound=int with the alarms' id that will sound
-    if sound >= 0:
-        clock.alarms[sound].play()
-        print('sonido pa tu culo')
-        print(sound)
-    time.sleep(1)
+    while 1:
+        clock.show()
+        sound=clock.checkAlarms()#sound=int with the alarms' id that will sound
+        if sound >= 0:
+            clock.alarms[sound].play()
+            print('sonido pa tu culo')
+            print(sound)
+        time.sleep(1)
+
+
+if __name__ == "__main__" :
+    main()
+
